@@ -54,15 +54,12 @@ export default {
     filteredCoaches() {
       return this.coaches.filter((coach) => {
         if (this.activeFilters.frontend && coach.areas.includes('frontend')) {
-          console.log('f');
           return true;
         }
         if (this.activeFilters.backend && coach.areas.includes('backend')) {
-          console.log('b');
           return true;
         }
         if (this.activeFilters.career && coach.areas.includes('career')) {
-          console.log('c');
           return true;
         }
 
@@ -73,7 +70,6 @@ export default {
   methods: {
     setFilters(updatedFilters) {
       this.activeFilters = updatedFilters;
-      console.log(this.activeFilters);
     },
   },
 };
