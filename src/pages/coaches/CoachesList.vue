@@ -5,14 +5,24 @@
       <button>Refresh</button>
       <router-link to="/register">Register as Coach</router-link>
     </div>
-    <ul>
-      List of Coaches
+    <ul v-if="hasCoaches">
+      <li v-for="coach in coaches" :key="coach.id">{{ coach.firstName }}</li>
     </ul>
+    <h3 v-else>No coaches found.</h3>
   </section>
 </template>
 
 <script>
-export default {};
+import { mapGetters } from 'vuex';
+
+export default {
+  computed: {
+    ...mapGetters({
+      coaches: 'coaches/coaches',
+      hasCoaches: 'coaches/hasCoaches',
+    }),
+  },
+};
 </script>
 
 <style scoped></style>
