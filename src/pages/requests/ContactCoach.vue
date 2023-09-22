@@ -18,6 +18,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   data() {
     return {
@@ -27,6 +29,9 @@ export default {
     };
   },
   methods: {
+    ...mapActions({
+      contactCoach: 'requests/contactCoach',
+    }),
     submitForm() {
       this.formIsValid = true;
       if (
@@ -37,6 +42,13 @@ export default {
         this.formIsValid = false;
         return;
       }
+
+      this.contactCoach({
+        coachId: this.$route.params.id,
+        email: this.email,
+        message: this.message,
+      });
+      this.$router.replace('/coaches');
     },
   },
 };
