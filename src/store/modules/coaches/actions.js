@@ -23,7 +23,11 @@ export default {
     }
   },
 
-  async loadCoaches(context) {
+  async loadCoaches(context, payload) {
+    if (!payload.forceRefresh && !context.getters.shouldUpdate) {
+      return;
+    }
+
     const response = await axios.get(
       'https://vue-http-demo-66bc1-default-rtdb.europe-west1.firebasedatabase.app/coaches.json'
     );
@@ -45,6 +49,7 @@ export default {
       }
 
       context.commit('setCoaches', coaches);
+      context.commit('setFetchTimestamp');
     } catch (e) {
       throw new Error(response.data.message || 'Failed to fetch!');
     }
