@@ -6,11 +6,14 @@
     <base-card>
       <div class="controls">
         <base-button mode="outline" @click="loadCoaches">Refresh</base-button>
-        <base-button v-if="!isCoach" link to="/register">
+        <base-button v-if="!isCoach && !isLoading" link to="/register">
           Register as Coach
         </base-button>
       </div>
-      <ul v-if="hasCoaches">
+      <div v-if="isLoading">
+        <base-spinner />
+      </div>
+      <ul v-else-if="hasCoaches">
         <coach-item
           v-for="coach in filteredCoaches"
           :key="coach.id"
@@ -27,7 +30,6 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
 import CoachItem from '../../components/coaches/CoachItem.vue';
 import CoachFilter from '../../components/coaches/CoachFilter.vue';
 
@@ -38,6 +40,7 @@ export default {
   },
   data() {
     return {
+      isLoading: false,
       activeFilters: {
         frontend: true,
         backend: true,
@@ -46,11 +49,15 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({
-      coaches: 'coaches/coaches',
-      hasCoaches: 'coaches/hasCoaches',
-      isCoach: 'coaches/isCoach',
-    }),
+    coaches() {
+      return this.$store.getters['coaches/coaches'];
+    },
+    isCoach() {
+      return this.$store.getters['coaches/isCoach'];
+    },
+    hasCoaches() {
+      return !this.isLoading && this.$store.getters['coaches/hasCoaches'];
+    },
     filteredCoaches() {
       return this.coaches.filter((coach) => {
         if (this.activeFilters.frontend && coach.areas.includes('frontend')) {
@@ -67,16 +74,19 @@ export default {
       });
     },
   },
+  created() {
+    this.loadCoaches();
+    console.log('coaches', this.$store.getters['coaches/coaches']);
+  },
   methods: {
-    ...mapActions({
-      loadCoaches: 'coaches/loadCoaches',
-    }),
+    async loadCoaches() {
+      this.isLoading = true;
+      await this.$store.dispatch('coaches/loadCoaches');
+      this.isLoading = false;
+    },
     setFilters(updatedFilters) {
       this.activeFilters = updatedFilters;
     },
-  },
-  created() {
-    this.loadCoaches();
   },
 };
 </script>

@@ -16,18 +16,17 @@ export default {
       coachData
     );
 
-    // const responseData = await response.json();
-
-    if (!response.ok) {
-      // error ...
+    try {
+      // const responseData = await response.json();
+      context.commit('registerCoach', { ...coachData, id: userId });
+    } catch (e) {
+      throw new Error(`${response.status} - ${response.statusText}`);
     }
-
-    context.commit('registerCoach', { ...coachData, id: userId });
   },
 
   async loadCoaches(context) {
     const response = await axios.get(
-      'https://vue-http-demo-66bc1-default-rtdb.europe-west1.firebasedatabase.app/coaches.json'
+      'https://vue-http-demo-66bc1-default-rtdb.europe-west1.firebasedatabase.app/coaches.jso'
     );
 
     try {
