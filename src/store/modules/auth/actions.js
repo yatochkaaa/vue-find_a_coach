@@ -14,14 +14,12 @@ export default {
 
     try {
       const responseData = response.data;
-      console.log(responseData);
       context.commit('setUser', {
         token: responseData.idToken,
         userId: responseData.localId,
         tokenExpiration: responseData.expiresIn,
       });
     } catch (error) {
-      console.log(response);
       throw new Error(response.data.message);
     }
   },
