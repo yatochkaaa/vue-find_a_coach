@@ -3,7 +3,7 @@ import CoachesList from './pages/coaches/CoachesList.vue';
 import CoachDetail from './pages/coaches/CoachDetail.vue';
 import CoachRegistration from './pages/coaches/CoachRegistration.vue';
 import ContactCoach from './pages/requests/ContactCoach.vue';
-import RequestsRecieve from './pages/requests/RequestsRecieve.vue';
+import RequestsRecieved from './pages/requests/RequestsRecieved.vue';
 import NotFound from './pages/NotFound.vue';
 
 const router = createRouter({
@@ -18,7 +18,7 @@ const router = createRouter({
       children: [{ path: 'contact', component: ContactCoach }],
     },
     { path: '/register', component: CoachRegistration },
-    { path: '/requests', component: RequestsRecieve },
+    { path: '/requests', component: RequestsRecieved },
     { path: '/:notFound(.*)', component: NotFound },
   ],
 });
