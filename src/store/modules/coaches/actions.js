@@ -1,7 +1,9 @@
+import axios from 'axios';
+
 export default {
-  registerCoach(context, data) {
+  async registerCoach(context, data) {
+    const userId = context.rootGetters.userId;
     const coachData = {
-      id: context.rootGetters.userId,
       firstName: data.firstName,
       lastName: data.lastName,
       description: data.description,
@@ -9,6 +11,17 @@ export default {
       areas: data.areas,
     };
 
-    context.commit('registerCoach', coachData);
+    const response = await axios.put(
+      `https://vue-http-demo-66bc1-default-rtdb.europe-west1.firebasedatabase.app/coaches/${userId}.json`,
+      coachData
+    );
+
+    // const responseData = await response.json();
+
+    if (!response.ok) {
+      // error ...
+    }
+
+    context.commit('registerCoach', { ...coachData, id: userId });
   },
 };
