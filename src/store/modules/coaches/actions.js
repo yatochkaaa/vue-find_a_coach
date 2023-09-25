@@ -17,7 +17,7 @@ export default {
     );
 
     try {
-      // const responseData = await response.json();
+      // const responseData = await response.data;
       context.commit('registerCoach', { ...coachData, id: userId });
     } catch (e) {
       throw new Error(`${response.status} - ${response.statusText}`);
@@ -26,7 +26,7 @@ export default {
 
   async loadCoaches(context) {
     const response = await axios.get(
-      'https://vue-http-demo-66bc1-default-rtdb.europe-west1.firebasedatabase.app/coaches.jso'
+      'https://vue-http-demo-66bc1-default-rtdb.europe-west1.firebasedatabase.app/coaches.json'
     );
 
     try {
@@ -47,7 +47,7 @@ export default {
 
       context.commit('setCoaches', coaches);
     } catch (e) {
-      throw new Error(`${response.status} - ${response.statusText}`);
+      throw new Error(response.data.message || 'Failed to fetch!');
     }
   },
 };
