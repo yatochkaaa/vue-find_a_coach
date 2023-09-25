@@ -26,7 +26,7 @@ export default {
       email: '',
       message: '',
       formIsValid: true,
-    };
+    }; 
   },
   methods: {
     ...mapActions({
