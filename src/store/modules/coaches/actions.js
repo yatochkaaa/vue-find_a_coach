@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export default {
   async registerCoach(context, data) {
-    const userId = context.rootGetters.userId;
+    const userId = context.rootGetters['auth/userId'];
     const coachData = {
       firstName: data.firstName,
       lastName: data.lastName,
@@ -11,8 +11,10 @@ export default {
       areas: data.areas,
     };
 
+    const token = context.rootGetters['auth/token'];
+
     const response = await axios.put(
-      `https://vue-http-demo-66bc1-default-rtdb.europe-west1.firebasedatabase.app/coaches/${userId}.json`,
+      `https://vue-http-demo-66bc1-default-rtdb.europe-west1.firebasedatabase.app/coaches/${userId}.json?auth=${token}`,
       coachData
     );
 
