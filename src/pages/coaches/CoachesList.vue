@@ -80,7 +80,6 @@ export default {
   },
   created() {
     this.loadCoaches();
-    console.log('coaches', this.$store.getters['coaches/coaches']);
   },
   methods: {
     async loadCoaches() {

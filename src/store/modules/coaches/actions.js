@@ -17,10 +17,9 @@ export default {
     );
 
     try {
-      // const responseData = await response.data;
       context.commit('registerCoach', { ...coachData, id: userId });
     } catch (e) {
-      throw new Error(`${response.status} - ${response.statusText}`);
+      throw new Error(response.data.message || 'Failed to fetch!');
     }
   },
 
