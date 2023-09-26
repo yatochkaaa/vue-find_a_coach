@@ -44,4 +44,11 @@ export default {
       throw new Error(response.data.message);
     }
   },
+  logout(context) {
+    context.commit('setUser', {
+      token: null,
+      userId: null,
+      tokenExpiration: null,
+    });
+  },
 };
